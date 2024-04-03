@@ -53,7 +53,7 @@ class Assets:
             self.cleanup()
 
 
-SH_TEMPLATE = """#!/bin/bash
+EXEC_TEMPLATE = """#!/bin/bash
 python {target}
 
 """
@@ -78,7 +78,7 @@ def prepare(
     args: Tuple,
     kwargs: Dict,
     target_template: str = TARGET_TEMPLATE,
-    sh_template: str = SH_TEMPLATE,
+    exec_template: str = EXEC_TEMPLATE,
     verbose: bool = True,
 ) -> Assets:
     """
@@ -101,8 +101,8 @@ def prepare(
     assert "{ret_path}" in target_template, (
         "template must contain {ret_path} placeholder, but got " + target_template
     )
-    assert "{target}" in sh_template, (
-        "template must contain {target} placeholder, but got " + sh_template
+    assert "{target}" in exec_template, (
+        "template must contain {target} placeholder, but got " + exec_template
     )
 
     def random_name() -> str:
@@ -124,13 +124,15 @@ def prepare(
     )
 
     assets.target.write_text(target_script, encoding="utf-8")
-
-    assets.sh.write_text(sh_template.format(target=assets.target), encoding="utf-8")
-
     if verbose:
         print(f"Generated target:\n{target_script}")
 
+    assets.sh.write_text(exec_template.format(target=assets.target), encoding="utf-8")
+
     sh.Command("chmod")("+x", assets.sh)
+    if verbose:
+        print(f"Generated executable:\n{exec_template}")
+
     return assets
 
 

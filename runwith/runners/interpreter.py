@@ -19,13 +19,13 @@ class InterpreterRunner(Runner):
         interpreter: str,
         verbose: bool = True,
     ) -> None:
-        sh_template = f"#!/bin/bash\n{interpreter} {{target}}\n\n"
+        exec_template = f"#!/bin/bash\n{interpreter} {{target}}\n\n"
         super().__init__(
             func,
             args,
             kwargs,
             TARGET_TEMPLATE,
-            sh_template,
+            exec_template,
             prepare,
             verbose,
         )

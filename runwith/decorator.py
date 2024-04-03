@@ -5,14 +5,14 @@ This module contains decorators to run functions in different environments.
 from functools import wraps
 from typing import Any, Callable, Dict, Union
 
-from runwith.common import SH_TEMPLATE
+from runwith.common import EXEC_TEMPLATE
 from runwith.runners.interpreter import InterpreterRunner
 from runwith.runners.slurm import SlurmOptions, SlurmRunner
 
 
 def slurm(
     options: Union[SlurmOptions, Dict[str, Any]],
-    sh_template: str = SH_TEMPLATE,
+    exec_template: str = EXEC_TEMPLATE,
     verbose: bool = True,
 ) -> Callable:
     """
@@ -45,7 +45,7 @@ def slurm(
     def decorator(func: Callable):
         @wraps(func)
         def wrapper(*args, **kwargs) -> Any:
-            job_runner = SlurmRunner(func, args, kwargs, sh_template, options, verbose)
+            job_runner = SlurmRunner(func, args, kwargs, exec_template, options, verbose)
             return job_runner()
 
         return wrapper

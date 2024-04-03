@@ -22,7 +22,7 @@ class Runner:
         args: Tuple,
         kwargs: Dict[str, Any],
         target_template: str,
-        sh_template: str,
+        exec_template: str,
         prepare: PrepareFuncion,
         verbose: bool = True,
     ) -> None:
@@ -30,7 +30,7 @@ class Runner:
         self.args = args
         self.kwargs = kwargs
         self.target_template = target_template
-        self.sh_template = sh_template
+        self.exec_template = exec_template
         self.prepare = prepare
         self.verbose = verbose
 
@@ -42,7 +42,12 @@ class Runner:
             Any: return value of the function
         """
         assets = self.prepare(
-            self.func, self.args, self.kwargs, self.target_template, self.sh_template, self.verbose
+            self.func,
+            self.args,
+            self.kwargs,
+            self.target_template,
+            self.exec_template,
+            self.verbose,
         )
         sh.Command(assets.sh)(_out=sys.stdout, _err=sys.stderr)
         try:

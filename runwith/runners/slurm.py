@@ -177,8 +177,10 @@ class SlurmRunner(Runner):
         Returns:
             Any: return value of the function
         """
-        assets = prepare(self.func, self.args, self.kwargs, self.target_template, self.sh_template)
-        sh_script = self.sh_template.format(target=assets.target)
+        assets = prepare(
+            self.func, self.args, self.kwargs, self.target_template, self.exec_template
+        )
+        sh_script = self.exec_template.format(target=assets.target)
         assets.sh.write_text(sh_script, encoding="utf-8")
         self.slurm.srun(str(assets.sh))
         ret = load_return(assets.ret)
@@ -194,7 +196,7 @@ class SlurmRunner(Runner):
         """
         try:
             assets = prepare(self.func, self.args, self.kwargs)
-            sh_script = self.sh_template.format(target=assets.target)
+            sh_script = self.exec_template.format(target=assets.target)
             assets.sh.write_text(sh_script, encoding="utf-8")
             job_id = self.slurm.sbatch(str(assets.sh))
         except Exception as e:  # pylint: disable=broad-except
@@ -209,7 +211,7 @@ class SlurmRunner(Runner):
             f"  Arguments: {self.args}\n"
             f"  Keyword Arguments: {self.kwargs}\n"
             f"  Options: {self.options}\n"
-            f"  Template: {self.sh_template}\n"
+            f"  Template: {self.exec_template}\n"
         )
 
 
