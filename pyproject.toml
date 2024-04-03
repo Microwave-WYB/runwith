@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "runwith"
+version = "0.1.0"
+description = "A library for running Python functions in arbitrary environments."
+authors = ["Yibo Wei <david_wyb2001@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+sh = "^2.0.6"
+cloudpickle = "^3.0.0"
+simple-slurm = "^0.2.7"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3.0"
+pyright = "^1.1.356"
+pylint = "^3.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
