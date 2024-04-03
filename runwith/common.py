@@ -12,6 +12,25 @@ from typing import Any, Callable, Dict, Tuple
 import cloudpickle
 import sh
 
+EXEC_TEMPLATE = """#!/bin/bash
+python {target}
+
+"""
+
+
+TARGET_TEMPLATE = """import sys
+import pickle
+from pathlib import Path
+
+with open("{pickle_path}", "rb") as f:
+    func = pickle.load(f)
+    ret = func()
+    ret_path = Path("{ret_path}")
+    with open(ret_path, "wb") as f:
+        pickle.dump(ret, f)
+
+"""
+
 
 @dataclass
 class Assets:
@@ -51,26 +70,6 @@ class Assets:
     def __del__(self):
         if self.target.parent.exists():
             self.cleanup()
-
-
-EXEC_TEMPLATE = """#!/bin/bash
-python {target}
-
-"""
-
-
-TARGET_TEMPLATE = """import sys
-import pickle
-from pathlib import Path
-
-with open("{pickle_path}", "rb") as f:
-    func = pickle.load(f)
-    ret = func()
-    ret_path = Path("{ret_path}")
-    with open(ret_path, "wb") as f:
-        pickle.dump(ret, f)
-
-"""
 
 
 def prepare(
