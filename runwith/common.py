@@ -87,7 +87,8 @@ def prepare(
         func (Callable): function to be run.
         args (Tuple): arguments to the function.
         kwargs (Dict): keyword arguments to the function.
-        sh_template (str, optional): template for the shell script. Defaults to SH_TEMPLATE.
+        target_template (str, optional): template for the target script. Defaults to TARGET_TEMPLATE.
+        exec_template (str, optional): template for the shell script. Defaults to EXEC_TEMPLATE.
         verbose (bool, optional): print the generated script. Defaults to True.
 
     Returns:
