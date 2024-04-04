@@ -146,6 +146,15 @@ class SlurmOptions:
         data = json.load(file)
         return cls.loads(data)
 
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Convert the options to a dictionary.
+
+        Returns:
+            Dict[str, Any]: dictionary with the options
+        """
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
 
 class SlurmRunner(Runner):
     """
@@ -168,7 +177,7 @@ class SlurmRunner(Runner):
         super().__init__(func, args, kwargs, TARGET_TEMPLATE, sh_template, prepare, verbose)
         self.options = options
         self.slurm = simple_slurm.Slurm()
-        self.slurm.add_arguments(**asdict(self.options))
+        self.slurm.add_arguments(**self.options.to_dict())
 
     def run(self) -> Any:
         """
