@@ -185,23 +185,6 @@ class SlurmRunner(Runner):
         assets.cleanup()
         return ret
 
-    def submit(self) -> int:
-        """
-        Submit the job to slurm.
-
-        Returns:
-            int: job id
-        """
-        try:
-            assets = prepare(self.func, self.args, self.kwargs)
-            sh_script = self.exec_template.format(target=assets.target)
-            assets.exec.write_text(sh_script, encoding="utf-8")
-            job_id = self.slurm.sbatch("bash", str(assets.exec))
-        except Exception as e:  # pylint: disable=broad-except
-            print(e)
-            job_id = -1
-        return job_id
-
     def __str__(self) -> str:
         return (
             f"Slurm Job:\n"
@@ -233,18 +216,3 @@ class JobGroup:
         Run all jobs in the manager in parallel.
         """
         raise NotImplementedError("This method is not implemented yet.")
-
-    def submit_all(self) -> List[int]:
-        """
-        Submit all jobs to slurm.
-
-        Returns:
-            List[int]: job ids
-        """
-        job_ids = [job.submit() for job in self.jobs]
-        for i, job_id in enumerate(job_ids):
-            if job_id == -1:
-                print(f"Failed to submit job:\n{self.jobs[i]}")
-            else:
-                print(f"Submitted job with job id {job_id}")
-        return job_ids
