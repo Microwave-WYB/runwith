@@ -156,10 +156,6 @@ class SlurmOptions:
 class SlurmRunner(Runner):
     """
     Class to manage a job.
-
-    Attributes:
-        options (SlurmOptions): slurm options
-        slurm (simple_slurm.Slurm): slurm object
     """
 
     def __init__(
