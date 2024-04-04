@@ -184,7 +184,12 @@ class SlurmRunner(Runner):
             Any: return value of the function
         """
         assets = prepare(
-            self.func, self.args, self.kwargs, self.target_template, self.exec_template
+            self.func,
+            self.args,
+            self.kwargs,
+            self.target_template,
+            self.exec_template,
+            self.verbose,
         )
         self.slurm.srun("bash", str(assets.exec))
         ret = load_return(assets.ret)
