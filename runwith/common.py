@@ -42,7 +42,7 @@ class Assets:
     target: Path = field(init=False)
     dump: Path = field(init=False)
     ret: Path = field(init=False)
-    sh: Path = field(init=False)
+    exec: Path = field(init=False)
     log: Path = field(init=False)
 
     def __post_init__(self):
@@ -50,10 +50,10 @@ class Assets:
         self.target = self.base.with_suffix(".target.py").absolute()
         self.dump = self.base.with_suffix(".dump.pickle").absolute()
         self.ret = self.base.with_suffix(".ret.pickle").absolute()
-        self.sh = self.base.with_suffix(".sh").absolute()
+        self.exec = self.base.with_suffix(".sh").absolute()
         self.log = self.base.with_suffix(".log").absolute()
 
-        for path in [self.target, self.dump, self.ret, self.sh, self.log]:
+        for path in [self.target, self.dump, self.ret, self.exec, self.log]:
             if path.exists():
                 path.touch()
 
@@ -61,7 +61,7 @@ class Assets:
         """
         Remove all the generated files.
         """
-        for path in [self.target, self.dump, self.ret, self.sh, self.log]:
+        for path in [self.target, self.dump, self.ret, self.exec, self.log]:
             if path.exists():
                 path.unlink()
         if self.target.parent.exists():
@@ -127,9 +127,9 @@ def prepare(
     if verbose:
         print(f"Generated target:\n{target_script}")
 
-    assets.sh.write_text(exec_template.format(target=assets.target), encoding="utf-8")
+    assets.exec.write_text(exec_template.format(target=assets.target), encoding="utf-8")
 
-    sh.Command("chmod")("+x", assets.sh)
+    sh.Command("chmod")("+x", assets.exec)
     if verbose:
         print(f"Generated executable:\n{exec_template.format(target=assets.target)}")
 
