@@ -186,8 +186,6 @@ class SlurmRunner(Runner):
         assets = prepare(
             self.func, self.args, self.kwargs, self.target_template, self.exec_template
         )
-        sh_script = self.exec_template.format(target=assets.target)
-        assets.sh.write_text(sh_script, encoding="utf-8")
         self.slurm.srun(str(assets.sh))
         ret = load_return(assets.ret)
         assets.cleanup()
