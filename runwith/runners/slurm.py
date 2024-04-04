@@ -186,7 +186,7 @@ class SlurmRunner(Runner):
         assets = prepare(
             self.func, self.args, self.kwargs, self.target_template, self.exec_template
         )
-        self.slurm.srun(str(assets.exec))
+        self.slurm.srun("bash", str(assets.exec))
         ret = load_return(assets.ret)
         assets.cleanup()
         return ret
@@ -202,7 +202,7 @@ class SlurmRunner(Runner):
             assets = prepare(self.func, self.args, self.kwargs)
             sh_script = self.exec_template.format(target=assets.target)
             assets.exec.write_text(sh_script, encoding="utf-8")
-            job_id = self.slurm.sbatch(str(assets.exec))
+            job_id = self.slurm.sbatch("bash", str(assets.exec))
         except Exception as e:  # pylint: disable=broad-except
             print(e)
             job_id = -1
