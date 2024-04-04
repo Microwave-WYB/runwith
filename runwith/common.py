@@ -130,7 +130,7 @@ def prepare(
 
     sh.Command("chmod")("+x", assets.sh)
     if verbose:
-        print(f"Generated executable:\n{exec_template}")
+        print(f"Generated executable:\n{exec_template.format(target=assets.target)}")
 
     return assets
 
