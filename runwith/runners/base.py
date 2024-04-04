@@ -49,7 +49,7 @@ class Runner:
             self.exec_template,
             self.verbose,
         )
-        sh.Command(assets.sh)(_out=sys.stdout, _err=sys.stderr)
+        sh.Command(assets.exec)(_out=sys.stdout, _err=sys.stderr)
         try:
             ret = cloudpickle.loads(assets.ret.read_bytes())
         except Exception as e:
