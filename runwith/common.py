@@ -67,10 +67,6 @@ class Assets:
         if self.target.parent.exists():
             self.target.parent.rmdir()
 
-    def __del__(self):
-        if self.target.parent.exists():
-            self.cleanup()
-
 
 def prepare(
     func: Callable,
