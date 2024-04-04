@@ -86,7 +86,6 @@ class SlurmOptions:
     open_mode: Optional[str] = None
     output: Optional[str] = None
     overcommit: bool = False
-    parsable: bool = False
     partition: Optional[str] = None
     power: Optional[str] = None
     prefer: Optional[str] = None
@@ -108,12 +107,10 @@ class SlurmOptions:
     time: Optional[str] = None
     time_min: Optional[str] = None
     tmp: Optional[str] = None
-    tres_bind: Optional[str] = None
     tres_per_task: Optional[str] = None
     uid: Optional[str] = None
     use_min_nodes: bool = False
     verbose: bool = False
-    version: bool = False
     wait: bool = False
     wait_all_nodes: Optional[int] = None
     wckey: Optional[str] = None
