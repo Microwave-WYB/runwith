@@ -3,6 +3,7 @@ This module contains the base class for all runners of python functions.
 """
 
 import sys
+from functools import partial
 from typing import Any, Callable, Dict, Tuple
 
 import cloudpickle
@@ -31,7 +32,7 @@ class Runner:
         self.kwargs = kwargs
         self.target_template = target_template
         self.exec_template = exec_template
-        self.prepare = prepare
+        self.prepare = partial(prepare, func, args, kwargs, target_template, exec_template, verbose)
         self.verbose = verbose
 
     def run(self) -> Any:
@@ -41,14 +42,7 @@ class Runner:
         Returns:
             Any: return value of the function
         """
-        assets = self.prepare(
-            self.func,
-            self.args,
-            self.kwargs,
-            self.target_template,
-            self.exec_template,
-            self.verbose,
-        )
+        assets = self.prepare()
         sh.Command(assets.exec)(_out=sys.stdout, _err=sys.stderr)
         try:
             ret = cloudpickle.loads(assets.ret.read_bytes())
