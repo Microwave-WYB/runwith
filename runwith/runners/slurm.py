@@ -4,7 +4,7 @@ This modules contains utility functions related to slurm
 
 import json
 from dataclasses import asdict, dataclass, field
-from typing import Any, Callable, Dict, List, NoReturn, Optional, TextIO, Tuple
+from typing import Any, Callable, NoReturn, Optional, TextIO
 
 import simple_slurm
 
@@ -117,12 +117,12 @@ class SlurmOptions:
     wrap: Optional[str] = None
 
     @classmethod
-    def loads(cls, data: Dict[str, Any]) -> "SlurmOptions":
+    def loads(cls, data: dict[str, Any]) -> "SlurmOptions":
         """
         Load options from a dictionary.
 
         Args:
-            data (Dict[str, Any]): dictionary with options
+            data (dict[str, Any]): dictionary with options
 
         Returns:
             SlurmOptions: instance with the options
@@ -143,7 +143,7 @@ class SlurmOptions:
         data = json.load(file)
         return cls.loads(data)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """
         Convert the options to a dictionary.
 
@@ -161,8 +161,8 @@ class SlurmRunner(Runner):
     def __init__(
         self,
         func: Callable,
-        args: Tuple,
-        kwargs: Dict[str, Any],
+        args: tuple,
+        kwargs: dict[str, Any],
         sh_template: str,
         options: SlurmOptions = SlurmOptions(),
         verbose: bool = True,
@@ -200,7 +200,7 @@ class SlurmRunner(Runner):
 class JobGroup:
     """Class to manage multiple jobs."""
 
-    jobs: List[SlurmRunner] = field(default_factory=list)
+    jobs: list[SlurmRunner] = field(default_factory=list)
 
     def add_job(self, job: SlurmRunner):
         """

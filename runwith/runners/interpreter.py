@@ -2,7 +2,7 @@
 This module contains the runner for a python function in a custom interpreter.
 """
 
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Callable
 
 from runwith.common import TARGET_TEMPLATE, prepare
 from runwith.runners.base import Runner
@@ -14,8 +14,8 @@ class InterpreterRunner(Runner):
     def __init__(
         self,
         func: Callable,
-        args: Tuple,
-        kwargs: Dict[str, Any],
+        args: tuple,
+        kwargs: dict[str, Any],
         interpreter: str,
         verbose: bool = True,
     ) -> None:

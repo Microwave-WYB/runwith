@@ -4,14 +4,14 @@ This module contains the base class for all runners of python functions.
 
 import sys
 from functools import partial
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Callable
 
 import cloudpickle
 import sh
 
 from runwith.common import Assets
 
-PrepareFuncion = Callable[[Callable, Tuple, Dict[str, Any], str, str, bool], Assets]
+PrepareFuncion = Callable[[Callable, tuple, dict[str, Any], str, str, bool], Assets]
 
 
 class Runner:
@@ -20,8 +20,8 @@ class Runner:
     def __init__(
         self,
         func: Callable,
-        args: Tuple,
-        kwargs: Dict[str, Any],
+        args: tuple,
+        kwargs: dict[str, Any],
         target_template: str,
         exec_template: str,
         prepare: PrepareFuncion,

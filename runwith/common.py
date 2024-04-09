@@ -7,7 +7,7 @@ import string
 from dataclasses import dataclass, field
 from functools import partial
 from pathlib import Path
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Callable
 
 import cloudpickle
 import sh
@@ -70,8 +70,8 @@ class Assets:
 
 def prepare(
     func: Callable,
-    args: Tuple,
-    kwargs: Dict,
+    args: tuple,
+    kwargs: dict,
     target_template: str = TARGET_TEMPLATE,
     exec_template: str = EXEC_TEMPLATE,
     verbose: bool = True,
@@ -81,8 +81,8 @@ def prepare(
 
     Args:
         func (Callable): function to be run.
-        args (Tuple): arguments to the function.
-        kwargs (Dict): keyword arguments to the function.
+        args (tuple): arguments to the function.
+        kwargs (dict): keyword arguments to the function.
         target_template (str, optional): template for the target script. Defaults to TARGET_TEMPLATE.
         exec_template (str, optional): template for the shell script. Defaults to EXEC_TEMPLATE.
         verbose (bool, optional): print the generated script. Defaults to True.

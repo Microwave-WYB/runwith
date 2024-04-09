@@ -3,7 +3,7 @@ This module contains decorators to run functions in different environments.
 """
 
 from functools import wraps
-from typing import Any, Callable, Dict, Union
+from typing import Any, Callable, Union
 
 from runwith.common import EXEC_TEMPLATE
 from runwith.runners.interpreter import InterpreterRunner
@@ -11,7 +11,7 @@ from runwith.runners.slurm import SlurmOptions, SlurmRunner
 
 
 def slurm(
-    options: Union[SlurmOptions, Dict[str, Any]],
+    options: Union[SlurmOptions, dict[str, Any]],
     exec_template: str = EXEC_TEMPLATE,
     verbose: bool = True,
 ) -> Callable:
@@ -31,7 +31,7 @@ def slurm(
     )
 
     Args:
-        options (Union[SlurmOptions, Dict[str, Any]]): slurm options.
+        options (Union[SlurmOptions, dict[str, Any]]): slurm options.
         template (str): custom script template.
                 The template must be contain a {target} placeholder.
         verbose (bool, optional): print the generated script. Defaults to True.
