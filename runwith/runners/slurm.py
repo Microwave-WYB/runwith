@@ -3,7 +3,7 @@ This modules contains utility functions related to slurm
 """
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Any, Callable, Dict, List, NoReturn, Optional, TextIO, Tuple
 
 import simple_slurm
@@ -200,7 +200,7 @@ class SlurmRunner(Runner):
 class JobGroup:
     """Class to manage multiple jobs."""
 
-    jobs: List[SlurmRunner]
+    jobs: List[SlurmRunner] = field(default_factory=list)
 
     def add_job(self, job: SlurmRunner):
         """
